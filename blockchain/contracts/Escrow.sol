@@ -1,11 +1,16 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
+import "./AccessManager.sol";
+import "./ConfigManager.sol";
+import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/utils/Pausable.sol";
+
 /**
  * @title Bondr Escrow Contract
  * @dev Manages escrow payments between creators and clients with milestone functionality
  */
-contract Escrow {
+contract Escrow is ReentrancyGuard, Pausable{
     // ======== ENUMS & STRUCTS ========
     
     enum AgreementStatus { 
@@ -28,6 +33,11 @@ contract Escrow {
         uint256 amount;
         MilestoneStatus status;
         uint256 completionTime; // When the milestone was marked as completed
+        // ======== TODO FOR TIMOUT MILESTONES ========
+        // bool isSubmitted;
+        // bool isApproved;
+        // uint256 submittedAt;
+        // bool disputed;
     }
     
     struct Agreement {
@@ -44,13 +54,15 @@ contract Escrow {
         uint256 disputeId; // ID of dispute if status is Disputed
         Milestone[] milestones;
     }
-    
+
     // ======== STATE VARIABLES ========
-    
+
+    ConfigManager public configManager;
+    AccessManager public accessManager;
     uint256 private nextAgreementId = 1;
     uint256 private nextDisputeId = 1;
     uint256 public platformFeePercent = 5; // 5% platform fee
-    address public owner;
+    // address public owner;
     address public feeCollector;
     
     // Mappings
@@ -73,7 +85,8 @@ contract Escrow {
     // ======== MODIFIERS ========
     
     modifier onlyOwner() {
-        require(msg.sender == owner, "Only contract owner can call this function");
+        // require(msg.sender == owner, "Only contract owner can call this function");
+        require(accessManager.hasRole(accessManager.DEFAULT_ADMIN_ROLE(), msg.sender), "Not admin");
         _;
     }
     
@@ -97,14 +110,17 @@ contract Escrow {
     }
     
     modifier onlyArbitrator(uint256 _disputeId) {
-        require(msg.sender == disputeArbitrators[_disputeId], "Only assigned arbitrator can call this function");
+        require(accessManager.isArbitrator(msg.sender), "Not an arbitrator");
+        // require(msg.sender == disputeArbitrators[_disputeId], "Only assigned arbitrator can call this function");
         _;
     }
     
     // ======== CONSTRUCTOR ========
     
-    constructor() {
-        owner = msg.sender;
+    constructor(address _accessManager) {
+        accessManager = AccessManager(_accessManager);
+        configManager = ConfigManager(_accessManager);
+        // owner = msg.sender;
         feeCollector = msg.sender; // Initially, the owner collects fees
     }
     
@@ -179,7 +195,7 @@ contract Escrow {
     /**
      * @dev Client funds the agreement or adds additional funding
      */
-    function fundAgreement(uint256 _agreementId) external payable onlyClient(_agreementId) {
+    function fundAgreement(uint256 _agreementId) external payable onlyClient(_agreementId) nonReentrant() whenNotPaused(){
         Agreement storage agreement = agreements[_agreementId];
         require(
             agreement.status == AgreementStatus.Created || 
@@ -206,7 +222,7 @@ contract Escrow {
     /**
      * @dev Creator marks a milestone as completed
      */
-    function completeMilestone(uint256 _agreementId, uint256 _milestoneIndex) external onlyCreator(_agreementId) {
+    function completeMilestone(uint256 _agreementId, uint256 _milestoneIndex) external onlyCreator(_agreementId) whenNotPaused() {
         Agreement storage agreement = agreements[_agreementId];
         require(agreement.status == AgreementStatus.Funded, "Agreement not in funded state");
         require(_milestoneIndex < agreement.milestones.length, "Invalid milestone index");
@@ -222,7 +238,7 @@ contract Escrow {
     /**
      * @dev Client approves a milestone and releases funds
      */
-    function approveMilestone(uint256 _agreementId, uint256 _milestoneIndex) external onlyClient(_agreementId) {
+    function approveMilestone(uint256 _agreementId, uint256 _milestoneIndex) external onlyClient(_agreementId) nonReentrant() whenNotPaused(){
         Agreement storage agreement = agreements[_agreementId];
         require(agreement.status == AgreementStatus.Funded, "Agreement not in funded state");
         require(_milestoneIndex < agreement.milestones.length, "Invalid milestone index");
@@ -266,7 +282,7 @@ contract Escrow {
         uint256 _agreementId, 
         uint256 _milestoneIndex, 
         string memory _reason
-    ) external onlyClient(_agreementId) {
+    ) external onlyClient(_agreementId) whenNotPaused(){
         Agreement storage agreement = agreements[_agreementId];
         require(agreement.status == AgreementStatus.Funded, "Agreement not in funded state");
         require(_milestoneIndex < agreement.milestones.length, "Invalid milestone index");
@@ -300,7 +316,7 @@ contract Escrow {
     /**
      * @dev Owner assigns an arbitrator to a dispute
      */
-    function assignArbitrator(uint256 _disputeId, address _arbitrator) external onlyOwner {
+    function assignArbitrator(uint256 _disputeId, address _arbitrator) external onlyOwner{
         require(_arbitrator != address(0), "Invalid arbitrator address");
         disputeArbitrators[_disputeId] = _arbitrator;
     }
@@ -358,7 +374,7 @@ contract Escrow {
      * @dev Cancels an agreement and refunds the client
      * Only possible if no milestones have been approved yet
      */
-    function cancelAgreement(uint256 _agreementId) external onlyClientOrCreator(_agreementId) {
+    function cancelAgreement(uint256 _agreementId) external onlyClientOrCreator(_agreementId) whenNotPaused(){
         Agreement storage agreement = agreements[_agreementId];
         require(
             agreement.status == AgreementStatus.Created || 
@@ -391,27 +407,20 @@ contract Escrow {
     /**
      * @dev Updates the platform fee percentage
      */
-    function updatePlatformFee(uint256 _newFeePercent) external onlyOwner {
+    function updatePlatformFee(uint256 _newFeePercent) external onlyOwner{
         require(_newFeePercent <= 20, "Fee percentage cannot exceed 20%");
         platformFeePercent = _newFeePercent;
+        
     }
     
     /**
      * @dev Updates the fee collector address
      */
-    function updateFeeCollector(address _newFeeCollector) external onlyOwner {
+    function updateFeeCollector(address _newFeeCollector) external onlyOwner{
         require(_newFeeCollector != address(0), "Invalid fee collector address");
         feeCollector = _newFeeCollector;
     }
-    
-    /**
-     * @dev Transfers ownership of the contract
-     */
-    function transferOwnership(address _newOwner) external onlyOwner {
-        require(_newOwner != address(0), "Invalid owner address");
-        owner = _newOwner;
-    }
-    
+
     // ======== VIEW FUNCTIONS ========
     
     /**
@@ -498,5 +507,17 @@ contract Escrow {
         }
         
         return (descriptions, amounts, statuses, completionTimes);
+    }
+
+
+    // ======== PAUSE FUNCTIONS ========
+
+    function pause() external onlyOwner(){
+        _pause();
+        
+    }
+
+    function unpause() external onlyOwner() {
+        _unpause();
     }
 }
