@@ -6,13 +6,21 @@
         "dev": "vite"
     },
     "dependencies": {
+        "@reown/walletkit": "^1.2.8",
         "@tailwindcss/vite": "^4.0.7",
+        "@walletconnect/core": "^2.21.4",
+        "@walletconnect/ethereum-provider": "^2.21.4",
+        "@walletconnect/utils": "^2.21.4",
         "autoprefixer": "^10.4.20",
         "axios": "^1.7.4",
         "concurrently": "^9.0.1",
+        "ethers": "^6.14.4",
         "laravel-vite-plugin": "^1.0",
         "tailwindcss": "^4.0.7",
-        "vite": "^6.0"
+        "toastr": "^2.1.4",
+        "viem": "^2.31.6",
+        "vite": "^6.0",
+        "web3modal": "^1.9.12"
     },
     "optionalDependencies": {
         "@rollup/rollup-linux-x64-gnu": "4.9.5",

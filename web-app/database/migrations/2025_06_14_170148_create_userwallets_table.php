@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('userwallets', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignUlid('user_id')->constrained()->onDelete('cascade');
             $table->string('wallet_address')->unique();
             $table->string('wallet_type')->nullable(); // e.g., metamask, walletconnect, etc.
             $table->boolean('is_primary')->default(false);

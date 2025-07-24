@@ -1,155 +1,155 @@
-<section id="features" class="py-20 bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
-    <!-- Background Elements -->
-    <div class="absolute top-20 right-20 text-6xl opacity-10 animate-wiggle">
-        💝🐼
-    </div>
-
-    <div class="container mx-auto px-6">
+<section id="features" class="py-20 bg-white relative overflow-hidden">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.6))]"></div>
+    
+    <div class="container mx-auto px-6 relative z-10">
         <div class="text-center mb-16" data-aos="fade-up">
-            <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-                Why both sides love Bondr 💕
+            <div class="inline-flex items-center bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full px-6 py-3 mb-6 shadow-lg">
+                <svg class="mr-3 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+                <span class="font-semibold text-sm">Trust & Protection</span>
+            </div>
+            
+            <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+                Why teams choose Bondr
             </h2>
             <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                Finally, freelance protection that actually works for everyone involved.
+                Stop taking risks with new contractors. Get guaranteed delivery with smart contract protection.
             </p>
-            
-            <!-- Love Visual -->
-            <div class="flex justify-center items-center mt-6 space-x-4" data-aos="fade-up" data-aos-delay="300">
-                <div class="text-3xl">👨‍💻</div>
-                <div class="text-4xl animate-bounce-gentle">💖</div>
-                <div class="text-3xl">👔</div>
-            </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-            <!-- Freelancers Card -->
-            <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-3xl shadow-xl relative overflow-hidden group hover-scale" data-aos="fade-left" data-aos-delay="0">
-                <!-- Floating Icons -->
-                <div class="absolute top-4 right-4 text-primary animate-float">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.618 5.984A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016zM12 9v2m0 4h.01"></path>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            <!-- Feature 1: Smart Contracts -->
+            <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 group" data-aos="fade-up" data-aos-delay="100">
+                <div class="w-16 h-16 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
                 </div>
-
-                <div class="text-6xl mb-6 relative">
-                    👨‍💻
-                    <!-- Floating Hearts -->
-                    <div class="absolute -top-2 -right-2 text-2xl animate-bounce-gentle">
-                        💪
-                    </div>
-                </div>
-
-                <h3 class="text-2xl font-bold text-gray-900 mb-4">
-                    For Freelancers: Stop working for free
+                
+                <h3 class="text-xl font-bold text-gray-900 mb-4">
+                    Smart Contract Protection
                 </h3>
-                <p class="text-gray-600 mb-6 text-lg">
-                    Never wonder if you'll get paid again. Smart contracts guarantee your payment is secured before you start, and your work is protected until you're paid.
+                <p class="text-gray-600 mb-6">
+                    Funds are locked in blockchain escrow until work is approved. No more payment disputes or chargebacks.
                 </p>
-
-                <ul class="space-y-4">
-                    <li class="flex items-center text-gray-700" data-aos="fade-right" data-aos-delay="500">
-                        <svg class="text-primary mr-3 flex-shrink-0 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                
+                <ul class="space-y-3">
+                    <li class="flex items-center text-sm text-gray-700">
+                        <svg class="w-4 h-4 text-green-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                         </svg>
-                        <span class="font-medium">Payment locked and guaranteed before work begins</span>
+                        <span>Automatic milestone releases</span>
                     </li>
-                    <li class="flex items-center text-gray-700" data-aos="fade-right" data-aos-delay="600">
-                        <svg class="text-primary mr-3 flex-shrink-0 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    <li class="flex items-center text-sm text-gray-700">
+                        <svg class="w-4 h-4 text-green-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                         </svg>
-                        <span class="font-medium">Your work can't be stolen or used without payment</span>
+                        <span>Dispute resolution system</span>
                     </li>
-                    <li class="flex items-center text-gray-700" data-aos="fade-right" data-aos-delay="700">
-                        <svg class="text-primary mr-3 flex-shrink-0 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    <li class="flex items-center text-sm text-gray-700">
+                        <svg class="w-4 h-4 text-green-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                         </svg>
-                        <span class="font-medium">Keep 98% of earnings (vs 80-90% on other platforms)</span>
-                    </li>
-                    <li class="flex items-center text-gray-700" data-aos="fade-right" data-aos-delay="800">
-                        <svg class="text-primary mr-3 flex-shrink-0 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                        <span class="font-medium">Get paid in 30 seconds, not 5-14 days</span>
-                    </li>
-                    <li class="flex items-center text-gray-700" data-aos="fade-right" data-aos-delay="900">
-                        <svg class="text-primary mr-3 flex-shrink-0 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                        <span class="font-medium">Works on Telegram where you already find clients</span>
+                        <span>Full refund guarantee</span>
                     </li>
                 </ul>
             </div>
 
-            <!-- Clients Card -->
-            <div class="bg-gradient-to-br from-green-50 to-green-100 p-8 rounded-3xl shadow-xl relative overflow-hidden group hover-scale" data-aos="fade-right" data-aos-delay="200">
-                <!-- Floating Icons -->
-                <div class="absolute top-4 right-4 text-primary animate-float" style="animation-delay: 1s;">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <!-- Feature 2: Reputation System -->
+            <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 group" data-aos="fade-up" data-aos-delay="200">
+                <div class="w-16 h-16 bg-gradient-to-r from-green-600 to-emerald-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                
+                <h3 class="text-xl font-bold text-gray-900 mb-4">
+                    On-Chain Reputation
+                </h3>
+                <p class="text-gray-600 mb-6">
+                    Build trust through verified deal history. Every successful transaction adds to your professional credibility.
+                </p>
+                
+                <ul class="space-y-3">
+                    <li class="flex items-center text-sm text-gray-700">
+                        <svg class="w-4 h-4 text-green-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span>Verified deal history</span>
+                    </li>
+                    <li class="flex items-center text-sm text-gray-700">
+                        <svg class="w-4 h-4 text-green-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span>Professional badges</span>
+                    </li>
+                    <li class="flex items-center text-sm text-gray-700">
+                        <svg class="w-4 h-4 text-green-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span>Portable trust score</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Feature 3: Fast Payments -->
+            <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 group" data-aos="fade-up" data-aos-delay="300">
+                <div class="w-16 h-16 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                     </svg>
                 </div>
-
-                <div class="text-6xl mb-6 relative">
-                    👔
-                    <!-- Floating Money -->
-                    <div class="absolute -top-2 -right-2 text-2xl animate-bounce-gentle" style="animation-delay: 0.5s;">
-                        🛡️
-                    </div>
-                </div>
-
-                <h3 class="text-2xl font-bold text-gray-900 mb-4">
-                    For Clients: Hire with zero risk
+                
+                <h3 class="text-xl font-bold text-gray-900 mb-4">
+                    Instant Crypto Payments
                 </h3>
-                <p class="text-gray-600 mb-6 text-lg">
-                    Pay upfront with complete confidence. Your money stays locked until you get exactly what you ordered, and you can review everything safely first.
+                <p class="text-gray-600 mb-6">
+                    Get paid instantly in crypto. No waiting for bank transfers or dealing with international fees.
                 </p>
-
-                <ul class="space-y-4">
-                    <li class="flex items-center text-gray-700" data-aos="fade-left" data-aos-delay="700">
-                        <svg class="text-primary mr-3 flex-shrink-0 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                
+                <ul class="space-y-3">
+                    <li class="flex items-center text-sm text-gray-700">
+                        <svg class="w-4 h-4 text-green-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                         </svg>
-                        <span class="font-medium">Funds secured until you approve the final work</span>
+                        <span>30-second payments</span>
                     </li>
-                    <li class="flex items-center text-gray-700" data-aos="fade-left" data-aos-delay="800">
-                        <svg class="text-primary mr-3 flex-shrink-0 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    <li class="flex items-center text-sm text-gray-700">
+                        <svg class="w-4 h-4 text-green-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                         </svg>
-                        <span class="font-medium">Preview and test deliverables before anyone can download</span>
+                        <span>Global accessibility</span>
                     </li>
-                    <li class="flex items-center text-gray-700" data-aos="fade-left" data-aos-delay="900">
-                        <svg class="text-primary mr-3 flex-shrink-0 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    <li class="flex items-center text-sm text-gray-700">
+                        <svg class="w-4 h-4 text-green-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                         </svg>
-                        <span class="font-medium">Automatic full refund if work isn't delivered</span>
-                    </li>
-                    <li class="flex items-center text-gray-700" data-aos="fade-left" data-aos-delay="1000">
-                        <svg class="text-primary mr-3 flex-shrink-0 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                        <span class="font-medium">No more disputes, chargebacks, or legal hassles</span>
-                    </li>
-                    <li class="flex items-center text-gray-700" data-aos="fade-left" data-aos-delay="1100">
-                        <svg class="text-primary mr-3 flex-shrink-0 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                        <span class="font-medium">Pay 2% total vs 10-20% in platform markups</span>
+                        <span>No currency conversion</span>
                     </li>
                 </ul>
             </div>
         </div>
 
-        <!-- Bottom CTA -->
-        <div class="text-center mt-16 p-8 bg-gradient-to-r from-primary/10 to-green-100 rounded-3xl" data-aos="fade-up" data-aos-delay="1000">
-            <div class="text-6xl mb-4 animate-wiggle">
-                🐼🤝
+        <!-- Bottom Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mt-16 max-w-4xl mx-auto">
+            <div class="text-center" data-aos="fade-up" data-aos-delay="400">
+                <div class="text-3xl font-bold text-gray-900 mb-2">99.7%</div>
+                <div class="text-sm text-gray-600">Success Rate</div>
             </div>
-            <h3 class="text-2xl font-bold text-gray-900 mb-2">
-                Win-Win for Everyone!
-            </h3>
-            <p class="text-lg text-gray-600">
-                When freelancers and clients both feel safe, magic happens ✨
-            </p>
+            <div class="text-center" data-aos="fade-up" data-aos-delay="500">
+                <div class="text-3xl font-bold text-gray-900 mb-2">12,000+</div>
+                <div class="text-sm text-gray-600">Deals Completed</div>
+            </div>
+            <div class="text-center" data-aos="fade-up" data-aos-delay="600">
+                <div class="text-3xl font-bold text-gray-900 mb-2">$2.1M</div>
+                <div class="text-sm text-gray-600">Total Volume</div>
+            </div>
+            <div class="text-center" data-aos="fade-up" data-aos-delay="700">
+                <div class="text-3xl font-bold text-gray-900 mb-2">0</div>
+                <div class="text-sm text-gray-600">Scams</div>
+            </div>
         </div>
     </div>
 </section>

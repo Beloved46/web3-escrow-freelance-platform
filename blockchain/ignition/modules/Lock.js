@@ -16,3 +16,14 @@ module.exports = buildModule("LockModule", (m) => {
 
   return { lock };
 });
+
+
+// {
+//   "scripts": {
+//     "deploy:base-sepolia": "hardhat ignition deploy ignition/modules/EscrowModule.js --network baseSepolia",
+//     "deploy:base": "hardhat ignition deploy ignition/modules/EscrowModule.js --network base",
+//     "verify:base-sepolia": "hardhat verify --network baseSepolia",
+//     "verify:base": "hardhat verify --network base",
+//     "deploy:local": "hardhat ignition deploy ignition/modules/EscrowModule.js --network localhost"
+//   }
+// }

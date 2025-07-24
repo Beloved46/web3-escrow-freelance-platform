@@ -1,0 +1,12 @@
+{
+  "network": "baseSepolia",
+  "chainId": 84532,
+  "explorer": "https://sepolia.basescan.org",
+  "contracts": {
+    "AccessManager": "0x25DC13a94f8669d933Dc5d7539aDDdC42073141C",
+    "ConfigManager": "0xaFeE4AF7c8Efa488f29F2B459040803e8d8716ED",
+    "Helper": "0xEfB7d7Ce28B0d8787de626E23666cAF11D8d97b0",
+    "Escrow": "0x9E842E7bbEb02B5F278d415B30e5dBb5279A79b9"
+  },
+  "timestamp": "2025-06-18T23:36:04.624Z"
+}

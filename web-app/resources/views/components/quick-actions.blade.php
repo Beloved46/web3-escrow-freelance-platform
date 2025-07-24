@@ -1,42 +1,42 @@
-<div>
-    <div class="card bg-gradient-to-br from-primary to-primary-focus text-primary-content shadow-lg">
-        <div class="card-body">
-            <h3 class="card-title text-lg mb-4">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                </svg>
-                Quick Actions
-            </h3>
-            
-            <div class="space-y-3">
-                <button class="btn btn-ghost btn-block justify-start text-primary-content hover:bg-primary-content/20 border-primary-content/20">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-                    </svg>
-                    Create New Agreement
-                </button>
-                
-                <button class="btn btn-ghost btn-block justify-start text-primary-content hover:bg-primary-content/20 border-primary-content/20">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"/>
-                    </svg>
-                    Upload Documents
-                </button>
-                
-                <button class="btn btn-ghost btn-block justify-start text-primary-content hover:bg-primary-content/20 border-primary-content/20">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                    </svg>
-                    View Analytics
-                </button>
-                
-                <button class="btn btn-ghost btn-block justify-start text-primary-content hover:bg-primary-content/20 border-primary-content/20">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/>
-                    </svg>
-                    Contact Support
-                </button>
-            </div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <!-- Create New Agreement -->
+    <a href="{{ route('agreements.create') }}" class="group block bg-white dark:bg-base-100 border border-base-200 rounded-xl shadow-sm p-5 hover:shadow-lg transition flex items-center space-x-4">
+        <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-indigo-50 group-hover:bg-indigo-100">
+            <svg class="w-7 h-7 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+        </span>
+        <div>
+            <div class="font-semibold text-base-content">Create New Agreement</div>
+            <div class="text-sm text-base-content/60">Start a new deal with a freelancer or team</div>
         </div>
-    </div>
+    </a>
+    <!-- Fund Milestone -->
+    <a href="{{ route('dashboard') }}#milestones" class="group block bg-white dark:bg-base-100 border border-base-200 rounded-xl shadow-sm p-5 hover:shadow-lg transition flex items-center space-x-4">
+        <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-blue-50 group-hover:bg-blue-100">
+            <svg class="w-7 h-7 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3zm0 0V4m0 7v9m8-4a8 8 0 11-16 0 8 8 0 0116 0z"/></svg>
+        </span>
+        <div>
+            <div class="font-semibold text-base-content">Fund Milestone</div>
+            <div class="text-sm text-base-content/60">Lock payment for a project milestone</div>
+        </div>
+    </a>
+    <!-- Invite Team -->
+    <a href="{{ route('dashboard') }}#invite" class="group block bg-white dark:bg-base-100 border border-base-200 rounded-xl shadow-sm p-5 hover:shadow-lg transition flex items-center space-x-4">
+        <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-indigo-50 group-hover:bg-indigo-100">
+            <svg class="w-7 h-7 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-2a4 4 0 10-8 0 4 4 0 008 0zm6-2a4 4 0 10-8 0 4 4 0 008 0z"/></svg>
+        </span>
+        <div>
+            <div class="font-semibold text-base-content">Invite Team</div>
+            <div class="text-sm text-base-content/60">Add collaborators or clients to your workspace</div>
+        </div>
+    </a>
+    <!-- View Trust Score -->
+    <a href="{{ route('dashboard') }}#trust" class="group block bg-white dark:bg-base-100 border border-base-200 rounded-xl shadow-sm p-5 hover:shadow-lg transition flex items-center space-x-4">
+        <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-blue-50 group-hover:bg-blue-100">
+            <svg class="w-7 h-7 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3zm0 0V4m0 7v9m8-4a8 8 0 11-16 0 8 8 0 0116 0z"/></svg>
+        </span>
+        <div>
+            <div class="font-semibold text-base-content">View Trust Score</div>
+            <div class="text-sm text-base-content/60">See your on-chain reputation and history</div>
+        </div>
+    </a>
 </div>

@@ -5,7 +5,7 @@ namespace App\Livewire\Dashboard;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
 
-#[Layout('components.layouts.dashboard')]
+#[Layout(name: 'components.layouts.dashboard')]
 class AgreementList extends Component
 {
     public function render()

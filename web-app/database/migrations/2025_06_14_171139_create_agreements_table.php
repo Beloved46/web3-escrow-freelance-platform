@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('agreements', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('client_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('creator_id')->constrained('users')->onDelete('cascade');
+            $table->foreignUlid('client_id')->constrained('users')->onDelete('cascade');
+            $table->foreignUlid('creator_id')->constrained('users')->onDelete('cascade');
             $table->string('client_wallet_address')->nullable(); // Optional, if client has a wallet
             $table->string('creator_wallet_address')->nullable(); // Optional, if creator has a wallet
             $table->string('blockchain_agreement_id')->unique(); // Unique ID for the agreement on the blockchain

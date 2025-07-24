@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.17;
+pragma solidity ^0.8.28;
 
 import "./AccessManager.sol";
 import "./ConfigManager.sol";
@@ -9,6 +9,7 @@ import "@openzeppelin/contracts/utils/Pausable.sol";
 /**
  * @title Bondr Escrow Contract
  * @dev Manages escrow payments between creators and clients with milestone functionality
+ * @dev Enhanced with reputation system and on-chain credibility
  */
 contract Escrow is ReentrancyGuard, Pausable{
     // ======== ENUMS & STRUCTS ========
@@ -28,16 +29,24 @@ contract Escrow is ReentrancyGuard, Pausable{
         Rejected   // Client rejected the milestone work
     }
     
+    enum BadgeLevel {
+        None,       // 0-4 deals
+        Bronze,     // 5-19 deals
+        Silver,     // 20-49 deals
+        Gold,       // 50-99 deals
+        Platinum,   // 100-199 deals
+        Diamond     // 200+ deals
+    }
+    
     struct Milestone {
         string description;
         uint256 amount;
         MilestoneStatus status;
         uint256 completionTime; // When the milestone was marked as completed
-        // ======== TODO FOR TIMOUT MILESTONES ========
-        // bool isSubmitted;
-        // bool isApproved;
-        // uint256 submittedAt;
-        // bool disputed;
+        uint256 submittedAt;    // When milestone was submitted
+        bool isSubmitted;
+        bool isApproved;
+        bool disputed;
     }
     
     struct Agreement {
@@ -53,6 +62,19 @@ contract Escrow is ReentrancyGuard, Pausable{
         uint256 releasedAmount; // Total amount released to creator
         uint256 disputeId; // ID of dispute if status is Disputed
         Milestone[] milestones;
+        bool isTelegramDeal; // Track if deal originated from Telegram
+        string telegramChatId; // Store Telegram chat ID for notifications
+    }
+    
+    struct UserProfile {
+        uint256 totalDeals;
+        uint256 successfulDeals;
+        uint256 totalVolume;
+        uint256 reputationScore;
+        BadgeLevel badgeLevel;
+        uint256 lastActive;
+        mapping(address => bool) hasWorkedWith;
+        mapping(address => uint256) workHistory; // Number of deals with specific address
     }
 
     // ======== STATE VARIABLES ========
@@ -62,12 +84,12 @@ contract Escrow is ReentrancyGuard, Pausable{
     uint256 private nextAgreementId = 1;
     uint256 private nextDisputeId = 1;
     uint256 public platformFeePercent = 2; // 2% platform fee
-    // address public owner;
     address public feeCollector;
     
     // Mappings
     mapping(uint256 => Agreement) public agreements;
     mapping(uint256 => address) public disputeArbitrators; // Maps dispute IDs to assigned arbitrators
+    mapping(address => UserProfile) public userProfiles; // User reputation profiles
     
     // ======== EVENTS ========
     
@@ -81,11 +103,12 @@ contract Escrow is ReentrancyGuard, Pausable{
     event AgreementDisputed(uint256 indexed agreementId, uint256 disputeId, string reason);
     event DisputeResolved(uint256 indexed disputeId, uint256 agreementId, address winner);
     event AgreementCancelled(uint256 indexed agreementId);
-    
+    event UserProfileUpdated(address indexed user, uint256 reputationScore, BadgeLevel badgeLevel);
+    event TelegramDealCreated(uint256 indexed agreementId, string telegramChatId);
+
     // ======== MODIFIERS ========
     
     modifier onlyOwner() {
-        // require(msg.sender == owner, "Only contract owner can call this function");
         require(accessManager.hasRole(accessManager.DEFAULT_ADMIN_ROLE(), msg.sender), "Not admin");
         _;
     }
@@ -111,16 +134,14 @@ contract Escrow is ReentrancyGuard, Pausable{
     
     modifier onlyArbitrator(uint256 _disputeId) {
         require(accessManager.isArbitrator(msg.sender), "Not an arbitrator");
-        // require(msg.sender == disputeArbitrators[_disputeId], "Only assigned arbitrator can call this function");
         _;
     }
-    
+
     // ======== CONSTRUCTOR ========
     
     constructor(address _accessManager) {
         accessManager = AccessManager(_accessManager);
         configManager = ConfigManager(_accessManager);
-        // owner = msg.sender;
         feeCollector = msg.sender; // Initially, the owner collects fees
     }
     
@@ -131,12 +152,16 @@ contract Escrow is ReentrancyGuard, Pausable{
      * @param _creator Address of the creator/freelancer
      * @param _description Description of the work to be done
      * @param _deadline Optional deadline for work completion (0 for no deadline)
+     * @param _isTelegramDeal Whether this deal originated from Telegram
+     * @param _telegramChatId Telegram chat ID for notifications
      * @return agreementId The ID of the newly created agreement
      */
     function createAgreement(
         address _creator, 
         string memory _description, 
-        uint256 _deadline
+        uint256 _deadline,
+        bool _isTelegramDeal,
+        string memory _telegramChatId
     ) external returns (uint256) {
         require(_creator != address(0), "Invalid creator address");
         require(_creator != msg.sender, "Client and creator cannot be the same");
@@ -150,10 +175,24 @@ contract Escrow is ReentrancyGuard, Pausable{
         newAgreement.createdAt = block.timestamp;
         newAgreement.deadline = _deadline;
         newAgreement.status = AgreementStatus.Created;
+        newAgreement.isTelegramDeal = _isTelegramDeal;
+        newAgreement.telegramChatId = _telegramChatId;
+        
+        // Update user profiles
+        _updateUserProfile(msg.sender, _creator, 0, true);
         
         emit AgreementCreated(agreementId, msg.sender, _creator, 0);
         
+        if (_isTelegramDeal) {
+            emit TelegramDealCreated(agreementId, _telegramChatId);
+        }
+        
         return agreementId;
+    }
+
+
+    function getUserReputationScore(address user) public view returns (uint256) {
+        return userProfiles[user].reputationScore;
     }
     
     /**
@@ -178,7 +217,11 @@ contract Escrow is ReentrancyGuard, Pausable{
             description: _description,
             amount: _amount,
             status: MilestoneStatus.Pending,
-            completionTime: 0
+            completionTime: 0,
+            submittedAt: 0,
+            isSubmitted: false,
+            isApproved: false,
+            disputed: false
         });
         
         agreement.milestones.push(newMilestone);
@@ -519,5 +562,46 @@ contract Escrow is ReentrancyGuard, Pausable{
 
     function unpause() external onlyOwner() {
         _unpause();
+    }
+
+    // ======== INTERNAL FUNCTIONS ========
+
+    function _updateUserProfile(address _user, address _counterparty, uint256 _amount, bool _isFunding) internal {
+        UserProfile storage profile = userProfiles[_user];
+        profile.lastActive = block.timestamp;
+
+        if (_isFunding) {
+            profile.totalDeals++;
+            profile.totalVolume += _amount;
+            profile.hasWorkedWith[_counterparty] = true;
+            profile.workHistory[_counterparty]++;
+        } else {
+            profile.totalDeals++;
+            profile.totalVolume += _amount;
+            profile.hasWorkedWith[_counterparty] = true;
+            profile.workHistory[_counterparty]++;
+        }
+
+        // Simple reputation scoring (example)
+        // In a real system, this would involve complex algorithms
+        // For now, a basic scoring based on total deals and successful deals
+        profile.reputationScore = profile.totalDeals; // Placeholder
+
+        // Update badge level
+        if (profile.totalDeals < 5) {
+            profile.badgeLevel = BadgeLevel.None;
+        } else if (profile.totalDeals < 20) {
+            profile.badgeLevel = BadgeLevel.Bronze;
+        } else if (profile.totalDeals < 50) {
+            profile.badgeLevel = BadgeLevel.Silver;
+        } else if (profile.totalDeals < 100) {
+            profile.badgeLevel = BadgeLevel.Gold;
+        } else if (profile.totalDeals < 200) {
+            profile.badgeLevel = BadgeLevel.Platinum;
+        } else {
+            profile.badgeLevel = BadgeLevel.Diamond;
+        }
+
+        emit UserProfileUpdated(_user, profile.reputationScore, profile.badgeLevel);
     }
 }

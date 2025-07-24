@@ -4,7 +4,7 @@
             <div class="col-span-1 md:col-span-2">
                 <div class="flex items-center space-x-2 mb-4">
                     <img 
-                        src="{{ asset('images/bondr-logo.png') }}" 
+                        src="{{ asset('images/bondrtwo.jpeg') }}" 
                         alt="Bondr Logo" 
                         class="h-10 w-10"
                     >

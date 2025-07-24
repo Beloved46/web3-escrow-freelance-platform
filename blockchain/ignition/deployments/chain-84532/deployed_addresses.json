@@ -1,0 +1,6 @@
+{
+  "EscrowModule#AccessManager": "0xF3aE6A979162671655C05C9d7Da0f3baB2F61db8",
+  "EscrowModule#Helper": "0x280C04C88a314267Cdf66d1742BE63001cAB72fA",
+  "EscrowModule#ConfigManager": "0x6A83Db52774c501eA1aa0fc9dCEaa076Af427006",
+  "EscrowModule#Escrow": "0xC80b3735646e9c6a3b15e4AAFf81369fc8E1e7Aa"
+}

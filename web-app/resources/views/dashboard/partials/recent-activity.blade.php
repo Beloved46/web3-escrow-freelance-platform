@@ -1,4 +1,4 @@
-<div class="space-y-4">
+<div class="space-y-6">
     @php
     $activities = $recentActivity ?? [
         [
@@ -6,6 +6,8 @@
             'title' => 'Website Redesign Project',
             'client' => 'TechCorp Inc.',
             'action' => 'Milestone 2 approved',
+            'action_type' => 'approved',
+            'actor' => 'Client',
             'time' => '2 hours ago',
             'status' => 'approved',
             'avatar' => 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp'
@@ -15,6 +17,8 @@
             'title' => 'Mobile App Development',
             'client' => 'StartupXYZ',
             'action' => 'Work submitted for review',
+            'action_type' => 'submitted',
+            'actor' => 'You',
             'time' => '1 day ago',
             'status' => 'pending',
             'avatar' => 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp'
@@ -24,60 +28,72 @@
             'title' => 'Logo Design Package',
             'client' => 'Creative Agency',
             'action' => 'Payment released',
+            'action_type' => 'completed',
+            'actor' => 'You',
             'time' => '3 days ago',
             'status' => 'completed',
             'avatar' => 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp'
         ]
     ];
+    // Icon map for action types
+    $iconMap = [
+        'approved' => '<svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>',
+        'submitted' => '<svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 17l4 4 4-4m0-5V3a1 1 0 00-1-1h-6a1 1 0 00-1 1v9m0 0l4 4 4-4"/></svg>',
+        'completed' => '<svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>',
+        'dispute' => '<svg class="w-5 h-5 text-yellow-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
+        'default' => '<svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3"/></svg>',
+    ];
     @endphp
 
     @forelse($activities as $activity)
-    <div class="flex items-center justify-between p-4 bg-base-50 rounded-lg border border-base-200 hover:bg-base-100 transition-colors">
-        <div class="flex items-center space-x-4">
-            <div class="avatar">
-                <div class="w-12 h-12 rounded-full">
-                    <img src="{{ $activity['avatar'] }}" alt="Client avatar" />
-                </div>
-            </div>
-            <div class="flex-1">
-                <h4 class="font-semibold text-base-content">{{ $activity['title'] }}</h4>
-                <p class="text-sm text-base-content/60">Client: {{ $activity['client'] }}</p>
-                <p class="text-sm font-medium text-base-content/80 mt-1">{{ $activity['action'] }}</p>
-            </div>
-        </div>
-        <div class="flex items-center space-x-3">
-            @if($activity['status'] === 'completed')
-                <div class="badge badge-success gap-2">
-                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                    </svg>
-                    {{ ucfirst($activity['status']) }}
-                </div>
-            @elseif($activity['status'] === 'approved')
-                <div class="badge badge-primary gap-2">
-                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                    </svg>
-                    {{ ucfirst($activity['status']) }}
-                </div>
-            @else
-                <div class="badge badge-warning gap-2">
-                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
-                    </svg>
-                    {{ ucfirst($activity['status']) }}
-                </div>
+    <div class="flex items-start space-x-4 relative group">
+        <!-- Timeline dot -->
+        <div class="flex flex-col items-center">
+            <div class="w-3 h-3 rounded-full bg-indigo-500 border-2 border-white shadow-lg mt-2"></div>
+            @if(!$loop->last)
+                <div class="flex-1 w-px bg-base-200 h-full"></div>
             @endif
-            <span class="text-xs text-base-content/50 whitespace-nowrap">{{ $activity['time'] }}</span>
+        </div>
+        <!-- Card -->
+        <div class="flex-1 bg-white dark:bg-base-100 rounded-xl border border-base-200 shadow-sm p-4 hover:shadow-md transition">
+            <div class="flex items-center space-x-3 mb-2">
+                <span class="inline-block align-middle">{!! $iconMap[$activity['action_type']] ?? $iconMap['default'] !!}</span>
+                <span class="font-semibold text-base-content">{{ $activity['action'] }}</span>
+                @if($activity['status'] === 'completed')
+                    <span class="badge badge-success ml-2">Completed</span>
+                @elseif($activity['status'] === 'approved')
+                    <span class="badge badge-primary ml-2">Approved</span>
+                @elseif($activity['status'] === 'pending')
+                    <span class="badge badge-warning ml-2">Pending</span>
+                @elseif($activity['status'] === 'dispute')
+                    <span class="badge badge-warning ml-2">Dispute</span>
+                @else
+                    <span class="badge badge-ghost ml-2">{{ ucfirst($activity['status']) }}</span>
+                @endif
+            </div>
+            <div class="flex items-center space-x-2">
+                <div class="avatar">
+                    <div class="w-8 h-8 rounded-full">
+                        <img src="{{ $activity['avatar'] }}" alt="{{ $activity['actor'] }} avatar" />
+                    </div>
+                </div>
+                <div class="text-sm text-base-content/70">
+                    <span class="font-medium">{{ $activity['actor'] }}</span>
+                    <span class="mx-1">•</span>
+                    <span>{{ $activity['title'] }}</span>
+                    <span class="mx-1">•</span>
+                    <span class="text-xs text-base-content/50">{{ $activity['time'] }}</span>
+                </div>
+            </div>
         </div>
     </div>
     @empty
-    <div class="text-center py-12">
-        <svg class="w-16 h-16 mx-auto text-base-content/20 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div class="flex flex-col items-center justify-center py-12 bg-base-50 rounded-xl border border-base-200 shadow-inner">
+        <svg class="w-16 h-16 text-indigo-200 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
         </svg>
-        <h3 class="text-lg font-medium text-base-content/60 mb-2">No recent activity</h3>
-        <p class="text-base-content/50">Your recent agreement activities will appear here.</p>
+        <h3 class="text-lg font-semibold text-base-content/70 mb-2">No recent activity yet</h3>
+        <p class="text-base-content/50">Your agreement and payment activity will show up here as you use Bondr.</p>
     </div>
     @endforelse
 </div>
